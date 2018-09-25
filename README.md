@@ -25,3 +25,6 @@ Thanks to [@cretz](https://github.com/cretz) for helping with automatic tab sele
 #### Motivation
 
 Was looking for a method to export a video of user actions rendered using our custom player used in [uxlens](https://uxlens.com). Export has to happen on a server in an automated fashion and hence the usage of xvfb.
+
+#### Sample video
+[![Puppetcam](https://img.youtube.com/vi/f7Vdd0ExWiY/0.jpg)](https://www.youtube.com/watch?v=f7Vdd0ExWiY "Puppetcam")
