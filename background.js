@@ -1,8 +1,9 @@
 /* global chrome, MediaRecorder, FileReader */
 
+let recorder = null;
+let filename = null;
 chrome.runtime.onConnect.addListener(port => {
-  let recorder = null;
-  let filename = null;
+
   port.onMessage.addListener(msg => {
     console.log(msg);
     switch (msg.type) {
@@ -10,10 +11,12 @@ chrome.runtime.onConnect.addListener(port => {
         filename = msg.filename
         break
       case 'REC_STOP':
-        port.recorderPlaying = false    
         recorder.stop()    
         break
       case 'REC_CLIENT_PLAY':
+        if(recorder){
+          return
+        }
         const tab = port.sender.tab
         tab.url = msg.data.url
         chrome.desktopCapture.chooseDesktopMedia(['tab', 'audio'], streamId => {
@@ -62,12 +65,6 @@ chrome.runtime.onConnect.addListener(port => {
                 filename: filename
               }, ()=>{
               });
-              chrome.downloads.onChanged.addListener(function(delta) {
-                if (!delta.state ||(delta.state.current != 'complete')) {
-                  return;
-                }
-                port.postMessage({downloadComplete: true})
-              });
             }
 
             recorder.start();
@@ -78,4 +75,15 @@ chrome.runtime.onConnect.addListener(port => {
         console.log('Unrecognized message', msg)
     }
   })
+
+  chrome.downloads.onChanged.addListener(function(delta) {
+    if (!delta.state ||(delta.state.current != 'complete')) {
+      return;
+    }
+    try{
+      port.postMessage({downloadComplete: true})
+    }
+    catch(e){}
+  });
+
 })
