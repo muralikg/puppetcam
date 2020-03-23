@@ -9,7 +9,7 @@ var options     = {
     '--enable-usermedia-screen-capturing',
     '--allow-http-screen-capture',
     '--auto-select-desktop-capture-source=puppetcam',
-    '--load-extension=' + __dirname,,
+    '--load-extension=' + __dirname,
     '--disable-extensions-except=' + __dirname,
     '--disable-infobars',
     `--window-size=${width},${height}`,
