@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
 const Xvfb      = require('xvfb');
-var xvfb        = new Xvfb({silent: true});
 var width       = 1280;
 var height      = 720;
+var xvfb        = new Xvfb({silent: true, xvfb_args: ["-screen", "0", `${width}x${height}x24`, "-ac"],});
 var options     = {
   headless: false,
   args: [
